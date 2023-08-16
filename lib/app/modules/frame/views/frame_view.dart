@@ -21,13 +21,12 @@ class FrameView extends GetView<FrameController> {
         backgroundColor: const Color.fromARGB(255, 243, 243, 243),
         appBar: AppBar(
           bottom: PreferredSize(
-              preferredSize: Size(width * 0.1, height * 0.03),
+              preferredSize: Size(width * 0.1, height * 0.005),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                        bottom: height * 0.025, left: width * 0.02),
+                    padding: EdgeInsets.only(bottom: height * 0.015, left: 40),
                     child: SizedBox(
                       child: SvgPicture.asset(
                         'aseests/svgs/marlo.svg',
@@ -35,7 +34,7 @@ class FrameView extends GetView<FrameController> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: height * 0.025, right: 50),
+                    padding: EdgeInsets.only(bottom: height * 0.015, right: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -58,21 +57,7 @@ class FrameView extends GetView<FrameController> {
           backgroundColor: primaryColor,
         ),
         body: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Center(child:
-              //  FutureBuilder<dynamic>(
-              //   future: _controller.authenticate(),
-              //   builder: (context, snapshot) {
-              //     if (snapshot.connectionState == ConnectionState.waiting) {
-              //       return const CircularProgressIndicator();
-              //     } else if (controller.authToken == null) {
-              //       return const Text('Something went Wrong, Please try again.');
-              //     } else {
-              //       return
-              //       ;
-              //     }
-              //   },
-              // ),
-              GetBuilder<FrameController>(builder: (_) {
+          Center(child: GetBuilder<FrameController>(builder: (_) {
             return MouseRegion(
               onEnter: (event) {
                 _controller.changeDisplayMode(isHover: true);
@@ -112,7 +97,7 @@ class FrameView extends GetView<FrameController> {
                 controller: _controller.sideMenu,
                 style: SideMenuStyle(
                     selectedColor: const Color(0xff415094),
-                    compactSideMenuWidth: width * 0.05,
+                    compactSideMenuWidth: 90,
                     displayMode: _controller.sidemenuMode,
                     backgroundColor: primaryColor,
                     selectedIconColor: Colors.white,
@@ -121,7 +106,7 @@ class FrameView extends GetView<FrameController> {
                         const TextStyle(color: Colors.white),
                     unselectedTitleTextStyle:
                         const TextStyle(color: Colors.white),
-                    itemInnerSpacing: width * 0.01),
+                    itemInnerSpacing: 20),
                 items: [
                   SideMenuItem(
                     title: 'Home',
@@ -143,7 +128,7 @@ class FrameView extends GetView<FrameController> {
                     onTap: (index, _) {
                       _controller.sideMenu.changePage(index);
                     },
-                    icon: const Icon(Icons.wallet_travel_outlined),
+                    icon: const Icon(Icons.repeat_outlined),
                   ),
                 ],
               ),
