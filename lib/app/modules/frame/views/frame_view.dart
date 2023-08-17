@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:marlo/app/common/utils.dart';
 import 'package:marlo/app/modules/home/views/home_view.dart';
+import 'package:marlo/app/modules/transactions/views/transactions_view.dart';
 
 import '../controllers/frame_controller.dart';
 
@@ -112,6 +115,7 @@ class FrameView extends GetView<FrameController> {
                     title: 'Home',
                     onTap: (index, _) {
                       _controller.sideMenu.changePage(index);
+                      _controller.changeSelectedIndex();
                     },
                     iconWidget: SvgPicture.asset('aseests/svgs/home.svg'),
                   ),
@@ -127,6 +131,7 @@ class FrameView extends GetView<FrameController> {
                     title: 'Transactions',
                     onTap: (index, _) {
                       _controller.sideMenu.changePage(index);
+                      _controller.changeSelectedIndex();
                     },
                     icon: const Icon(Icons.repeat_outlined),
                   ),
@@ -134,7 +139,13 @@ class FrameView extends GetView<FrameController> {
               ),
             );
           })),
-          HomeView()
+          GetBuilder<FrameController>(
+            builder: (controller) {
+              return _controller.selectedIndex == 0
+                  ? HomeView()
+                  : TransactionsView();
+            },
+          )
         ]));
   }
 }

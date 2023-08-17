@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:marlo/app/common/models.dart';
 import 'package:marlo/app/common/utils.dart';
 import 'package:marlo/app/modules/home/views/filter_ui.dart';
 import 'package:marlo/app/modules/home/views/transactions_card_list.dart';
@@ -14,14 +13,14 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   final HomeController _controller = Get.put(HomeController());
+  final TransactionsResponseModel? transData;
 
-  HomeView({super.key});
+  HomeView({super.key, this.transData});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     // _controller.getTransactions();
-    log(width.toString());
     return
 //THIS IS THE MAIN AREA FOR DISPLAY
         Expanded(
@@ -195,7 +194,10 @@ class HomeView extends GetView<HomeController> {
             const SizedBox(height: 20),
             const SelectedFilterList(),
             const SizedBox(height: 20),
-            TransactionsTable(width: width)
+            TransactionsTable(
+              width: width,
+              allTransactions: transData?.response?.data,
+            )
           ],
         ),
       ),

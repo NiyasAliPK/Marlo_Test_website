@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:marlo/app/common/models.dart';
 import 'package:marlo/app/common/utils.dart';
 import 'package:marlo/app/modules/home/controllers/home_controller.dart';
 
 class TransactionsTable extends GetView<HomeController> {
-  const TransactionsTable({
-    super.key,
-    required this.width,
-  });
+  List<Transaction>? allTransactions;
+  TransactionsTable({super.key, required this.width, this.allTransactions});
 
   final double width;
 
@@ -99,7 +98,12 @@ class TransactionsTable extends GetView<HomeController> {
                           SizedBox(
                             width: width * 0.117,
                             child: textWidget(
-                                text: 'Shipped to Abc pvt ltd',
+                                text: allTransactions != null &&
+                                        allTransactions!.isNotEmpty
+                                    ? allTransactions![index]
+                                        .description
+                                        .toString()
+                                    : 'Shipped to Abc pvt ltd',
                                 color: Colors.black,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.bold),
@@ -110,8 +114,12 @@ class TransactionsTable extends GetView<HomeController> {
                     // const SizedBox(),
                     SizedBox(
                         width: 85,
-                        child:
-                            textWidget(text: '10000000', color: Colors.black)),
+                        child: textWidget(
+                            text: allTransactions != null &&
+                                    allTransactions!.isNotEmpty
+                                ? allTransactions![index].amount.toString()
+                                : '10000000',
+                            color: Colors.black)),
                     const SizedBox(width: 0),
                     Container(
                       width: 80,
@@ -121,16 +129,31 @@ class TransactionsTable extends GetView<HomeController> {
                           borderRadius: BorderRadius.circular(20)),
                       child: Center(
                         child: textWidget(
-                            text: 'Processing',
+                            text: allTransactions != null &&
+                                    allTransactions!.isNotEmpty
+                                ? allTransactions![index].status.toString()
+                                : 'Processing',
                             color: Colors.black,
                             fontsize: 12),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    textWidget(text: 'Payout', color: Colors.black),
+                    textWidget(
+                        text: allTransactions != null &&
+                                allTransactions!.isNotEmpty
+                            ? allTransactions![index].sourceType.toString()
+                            : 'Payout',
+                        color: Colors.black),
                     const SizedBox(),
                     textWidget(
-                        text: 'Tuesday, 16 may, 10:46', color: Colors.black),
+                        text: allTransactions != null &&
+                                allTransactions!.isNotEmpty
+                            ? allTransactions![index].createdAt!.replaceRange(
+                                19,
+                                allTransactions![index].createdAt!.length,
+                                '')
+                            : 'Tuesday, 16 may, 10:46',
+                        color: Colors.black),
                   ],
                 );
               },
